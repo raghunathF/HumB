@@ -9,20 +9,22 @@
 
 struct tc_module led_tc_instance;
 
-uint8_t compare_led_array[3];
+#define NO_OF_LEDS 4
+uint8_t compare_led_array[NO_OF_LEDS];
 uint8_t compare_led_array_ID;
 
-uint8_t pin_led_array[3];
+uint8_t pin_led_array[NO_OF_LEDS];
 uint8_t pin_led_array_ID;
 
-uint8_t temp_compare_led_array[3];
-uint8_t temp_pin_led_array[3];
+uint8_t temp_compare_led_array[NO_OF_LEDS];
+uint8_t temp_compare_led_array_2[NO_OF_LEDS];
+uint8_t temp_pin_led_array[NO_OF_LEDS];
 
 bool update_compare_led_array = false;
 
-static uint8_t N_valid_led_compares = 3;
+static uint8_t N_valid_led_compares = NO_OF_LEDS;
 
-#define CLEAR_LEDS 0x80000300 //31,9,8
+#define CLEAR_LEDS 0xC0000300 //31,30,9,8
 
 void LED_timer_init()
 {
@@ -49,7 +51,7 @@ void LEDS_off()
 	PortGroup *const port_base = port_get_group_from_gpio_pin(ORB_R1);
 	port_base->OUTSET.reg = CLEAR_LEDS ;
 	
-	port_pin_set_output_level(LED3,LED_ON);
+	//port_pin_set_output_level(LED3,LED_ON);
 	
 }
 
@@ -62,6 +64,7 @@ void LED_setup_pins()
 	port_pin_set_config(LED1, &config_port_pin);
 	port_pin_set_config(LED2, &config_port_pin);
 	port_pin_set_config(LED3, &config_port_pin);
+	port_pin_set_config(LED4, &config_port_pin);
 	set_drivestrength_LED();
 	LEDS_off();	
 }
@@ -86,20 +89,36 @@ void initializing_LED_pin_array()
 	temp_pin_led_array[0]  = LED1;
 	temp_pin_led_array[1]  = LED2;
 	temp_pin_led_array[2]  = LED3;
+	temp_pin_led_array[3]  = LED4;
 
 }
 
 void initializing_LED_compare_array()
 {
-	temp_compare_led_array[0] = 10;//LED1
-	temp_compare_led_array[1] = 0;//LED2
-	temp_compare_led_array[2] = 1;  //LED3
+	temp_compare_led_array_2[0] = 255;//LED1
+	temp_compare_led_array_2[1] = 255;//LED2
+	temp_compare_led_array_2[2] = 255;  //LED3
+	temp_compare_led_array_2[3] = 0;  //LED4
+
 }
 
+void transfer_temp_LED_2()
+{
+	uint8_t i =0;
+	for(i=0;i<=NO_OF_LEDS-1;i++)
+	{
+		temp_compare_led_array[i] = temp_compare_led_array_2[i];
+		temp_compare_led_array[i] = temp_compare_led_array_2[i];
+		temp_compare_led_array[i] = temp_compare_led_array_2[i];
+		temp_compare_led_array[i] = temp_compare_led_array_2[i];
+		
+	}
+}
 void increasing_LED_sort_tag()
 {
 	uint8_t i,j ,temp;
-	uint8_t N=3;
+	uint8_t N=NO_OF_LEDS;
+	transfer_temp_LED_2();
 	for(i=0; i< N-1 ;i++)
 	{
 		for(j=0;j< N-i-1;j++)
@@ -123,7 +142,7 @@ void LED_transfer_temp()
 {
 	uint8_t i;
 	N_valid_led_compares = 0;
-	for(i=0;i<=2;i++)
+	for(i=0;i<=NO_OF_LEDS-1;i++)
 	{
 		if(temp_compare_led_array[i] != 255)
 		{
@@ -149,6 +168,14 @@ void LED_init_array()
 void tc_callback_LED_OF(struct tc_module *const module_inst)
 {
 	uint8_t compare_value=0;
+	serial_timeout_count++;
+	count_broadcast++;
+	if(serial_timeout_count > MAX_SERIAL_TIMEOUT)
+	{
+		serial_timeout = true;
+		serial_timeout_count = 0;
+	}
+	
 	LEDS_off();
 	//Clear interrupts
 	//tc_clear_interrupts(&tc_instance);

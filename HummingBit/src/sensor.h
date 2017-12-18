@@ -10,7 +10,7 @@
 #define SENSOR_H_
 
 
-uint8_t adc_start_read_result(const enum adc_positive_input analogPin);
+uint16_t adc_start_read_result(const enum adc_positive_input analogPin);
 void sensor_init();
 
 void sensor_enable();

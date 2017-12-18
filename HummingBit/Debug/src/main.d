@@ -128,7 +128,7 @@ src/main.d src/main.o: ../src/main.c ../src/asf.h \
  ../src/ASF/sam0/drivers/tcc/tcc_callback.h \
  ../src/ASF/sam0/drivers/tcc/tcc.h ../src/pinout.h ../src/ORB.h \
  ../src/LED.h ../src/super_servo.h ../src/sensor_control.h \
- ../src/sensor.h ../src/test.h
+ ../src/sensor.h ../src/test.h ../src/UART_control.h ../src/UART.h
 
 ../src/asf.h:
 
@@ -411,3 +411,7 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-no
 ../src/sensor.h:
 
 ../src/test.h:
+
+../src/UART_control.h:
+
+../src/UART.h:

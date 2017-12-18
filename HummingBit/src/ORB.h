@@ -20,4 +20,5 @@ void ORB_init();
 void initializing_compare_array();
 void initializing_pin_array();
 void transfer_temp();
+void transfer_temp_2();
 #endif /* ORB_H_ */

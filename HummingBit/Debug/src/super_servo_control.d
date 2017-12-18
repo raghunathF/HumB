@@ -1,4 +1,5 @@
-src/test.d src/test.o: ../src/test.c ../src/asf.h \
+src/super_servo_control.d src/super_servo_control.o: \
+ ../src/super_servo_control.c ../src/asf.h \
  ../src/ASF/sam0/drivers/adc/adc.h ../src/ASF/sam0/utils/compiler.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\lib\gcc\arm-none-eabi\6.2.1\include\stddef.h \
  ../src/ASF/common/utils/parts.h ../src/ASF/sam0/utils/status_codes.h \
@@ -126,8 +127,8 @@ src/test.d src/test.o: ../src/test.c ../src/asf.h \
  ../src/ASF/sam0/drivers/tc/tc_interrupt.h \
  ../src/ASF/sam0/drivers/tc/tc.h ../src/ASF/sam0/drivers/tcc/tcc.h \
  ../src/ASF/sam0/drivers/tcc/tcc_callback.h \
- ../src/ASF/sam0/drivers/tcc/tcc.h ../src/pinout.h ../src/LED_control.h \
- ../src/ORB_control.h ../src/super_servo_control.h ../src/test.h
+ ../src/ASF/sam0/drivers/tcc/tcc.h ../src/pinout.h \
+ ../src/super_servo_control.h ../src/super_servo.h
 
 ../src/asf.h:
 
@@ -399,10 +400,6 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-no
 
 ../src/pinout.h:
 
-../src/LED_control.h:
-
-../src/ORB_control.h:
-
 ../src/super_servo_control.h:
 
-../src/test.h:
+../src/super_servo.h:

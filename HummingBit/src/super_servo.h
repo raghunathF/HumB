@@ -13,6 +13,9 @@ void super_servo_init();
 void enable_super_servo();
 void disable_super_servo();
 
+struct tcc_module tcc_ss_instance0;
+
+
 #define SERVO_1_CH 0
 #define SERVO_2_CH 1
 #define SERVO_3_CH 2

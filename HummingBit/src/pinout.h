@@ -26,6 +26,7 @@
 #define LED1 PIN_PA31
 #define LED2 PIN_PA08
 #define LED3 PIN_PA09
+#define LED4 PIN_PA30
 
 //Servo -- 4
 #define SERVO_1 PIN_PA04
@@ -38,7 +39,7 @@
 #define SENSOR2 PIN_PA11
 #define SENSOR3 PIN_PA10
 
-//UART
+//UART//SERCOM-1, pad-2,pad-3
 #define TX PIN_PA24
 #define RX PIN_PA25
 

@@ -16,6 +16,7 @@ uint8_t compare_array_ID;
 uint8_t pin_array[6];
 uint8_t pin_array_ID;
 
+uint8_t temp_compare_array_2[6];
 uint8_t temp_compare_array[6];
 uint8_t temp_pin_array[6];
 
@@ -30,6 +31,7 @@ void increasing_sort_tag()
 {
 	uint8_t i,j ,temp;
 	uint8_t N=6;
+	transfer_temp_2();
 	for(i=0; i< N-1 ;i++)
 	{
 		for(j=0;j< N-i-1;j++)
@@ -57,7 +59,6 @@ void ORB_leds_off()
 	
 }
 
-
 void transfer_temp()
 {
 	uint8_t i;
@@ -70,6 +71,15 @@ void transfer_temp()
 		}
 		compare_array[i] = temp_compare_array[i] ;
 		pin_array[i]  = temp_pin_array[i];
+	}
+}
+
+void transfer_temp_2()
+{
+	uint8_t i;
+	for(i=0;i<=5;i++)
+	{
+		temp_compare_array[i] = temp_compare_array_2[i] ;
 	}
 }
 
@@ -217,12 +227,12 @@ void initializing_pin_array()
 
 void initializing_compare_array()
 {
-	temp_compare_array[0] = 255;//Left -- R
-	temp_compare_array[1] = 255;//Left  -- G
-	temp_compare_array[2] = 10;//Left  -- B
-	temp_compare_array[3] = 40;//Right -- R
-	temp_compare_array[4] = 50;//Right  -- G
-	temp_compare_array[5] = 60;//Right -- B
+	temp_compare_array_2[0] = 255;//Left -- R
+	temp_compare_array_2[1] = 255;//Left  -- G
+	temp_compare_array_2[2] = 255;//Left  -- B
+	temp_compare_array_2[3] = 255;//Right -- R
+	temp_compare_array_2[4] = 255;//Right  -- G
+	temp_compare_array_2[5] = 255;//Right -- B
 }
 
 
@@ -230,6 +240,7 @@ void ORB_init_array()
 {
 	initializing_pin_array();
 	initializing_compare_array();
+	transfer_temp_2();
 	increasing_sort_tag();
 	transfer_temp();
 }

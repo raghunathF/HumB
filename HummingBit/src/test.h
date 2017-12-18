@@ -10,6 +10,8 @@
 #define TEST_H_
 
 void test_ORB();
+void test_LED();
+void test_servos();
 
 
 

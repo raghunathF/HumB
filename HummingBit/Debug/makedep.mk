@@ -2,6 +2,10 @@
 # Automatically-generated file. Do not edit or delete the file
 ################################################################################
 
+src\UART.c
+
+src\UART_control.c
+
 src\ASF\common2\services\delay\sam0\systick_counter.c
 
 src\ASF\sam0\drivers\adc\adc_sam_d_r_h\adc.c
@@ -21,6 +25,8 @@ src\sensor_control.c
 src\sensor.c
 
 src\super_servo.c
+
+src\super_servo_control.c
 
 src\test.c
 

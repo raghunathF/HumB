@@ -11,6 +11,7 @@
 
 extern uint8_t* global_sensor_value;
 uint32_t read_all_sensors();
+uint8_t read_sensor(uint8_t sensor_no);
 
 #define SENSOR1_AI  6
 #define SENSOR2_AI  9

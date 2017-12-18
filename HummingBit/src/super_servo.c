@@ -51,7 +51,7 @@ void super_servo_tcc_init()
 	config_tcc_ss.pins.wave_out_pin[SERVO_3_WO]        = PIN_PA06F_TCC0_WO2; //this is no longer correct--- should be now
 	config_tcc_ss.pins.wave_out_pin_mux[SERVO_3_WO]    = PINMUX_PA06F_TCC0_WO2; // this is no longer correct --- should be now
 	
-	config_tcc_ss.compare.match[SERVO_4_CH] = 4000;
+	config_tcc_ss.compare.match[SERVO_4_CH] = 2000;
 	config_tcc_ss.pins.enable_wave_out_pin[SERVO_4_WO] = true;
 	config_tcc_ss.pins.wave_out_pin[SERVO_4_WO]        = PIN_PA07F_TCC0_WO3; //this is no longer correct--- should be now
 	config_tcc_ss.pins.wave_out_pin_mux[SERVO_4_WO]    = PINMUX_PA07F_TCC0_WO3; // this is no longer correct --- should be now
