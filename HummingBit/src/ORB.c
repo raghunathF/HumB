@@ -153,8 +153,7 @@ void tc_callback_PWM(struct tc_module *const module_inst)
 	static uint8_t compare_value_last=0;
 	static uint8_t compare_value_current=0;
 	static bool first_time = true;
-	volatile uint32_t count;
-	
+
 	if(first_time == false)
 	{
 		port_pin_set_output_level(pin_array[pin_array_ID++], RGB_ON);

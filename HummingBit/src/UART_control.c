@@ -39,11 +39,13 @@ void serial_receive_bytes(uint8_t count_receive ,uint8_t* receive_data)
 
 void serial_main_loop_1()
 {
-	volatile uint8_t received_value[MAX_REC_BYTE];
-	volatile static uint8_t prev_rec_value[MAX_REC_BYTE];
-	volatile uint8_t transmit_value[MAX_TRANSMIT_VALUE];
-	volatile int temp=0;
-	static volatile bool broadcast= false;
+	uint8_t received_value[MAX_REC_BYTE]; //Changed Volatile 
+	static uint8_t prev_rec_value[MAX_REC_BYTE];
+	uint8_t transmit_value[MAX_TRANSMIT_VALUE];
+	int temp=0;
+	static  bool broadcast    = false;
+	static  bool notification = false;
+	static  uint8_t job_done  = FAILURE;
 
 	//usart_read_job(&usart_instance ,)
 	uint8_t i =0;
@@ -82,6 +84,7 @@ void serial_main_loop_1()
 				{
 					serial_timeout_count = 0;
 				}
+				job_done = SUCCESS; 
 				break;
 			
 			//Get all the sensors values
@@ -133,7 +136,7 @@ void serial_main_loop_1()
 				{
 					update_ORB_single(received_value[1],received_value[2], received_value[3], received_value[4]);
 				}
-				
+				job_done = SUCCESS; 
 				break;
 				
 			case 'L':
@@ -144,6 +147,7 @@ void serial_main_loop_1()
 				{
 					update_LEDS_single(received_value[1],received_value[2]);
 				}
+				job_done = SUCCESS; 
 				break;
 				
 				
@@ -155,6 +159,7 @@ void serial_main_loop_1()
 				{
 					update_super_servo_single(received_value[1],received_value[2]);
 				}
+				job_done = SUCCESS; 
 				break;
 				
 			case 's':
@@ -260,7 +265,8 @@ void serial_main_loop_1()
 					prev_rec_value[i] =0;
 				}
 				broadcast = false;
-				
+				job_done = SUCCESS; 
+			/*		
 			case 'x':
 				serial_timeout_count = 0;
 				serial_timeout = false;
@@ -275,8 +281,33 @@ void serial_main_loop_1()
 					prev_rec_value[i] =0;
 				}
 				
-				break;
+				break;	
+			*/	
+			case 'N':
+				//Notification on
+				serial_timeout_count = 0;
+				serial_timeout = false;
+				serial_receive_bytes(SENSORS_GET_LEN,received_value);
+				count_broadcast = 0;
+				switch(received_value[1])
+				{
+					//Start notification
+					case 'g':
+						notification = true;
+						break;
+					//Stop broadcast
+					case 's':
+						notification = false;
+						break;
 					
+					default :
+						head_ring_buffer = 0;
+						tail_ring_buffer = 0;
+					break;
+					
+				}
+				job_done = SUCCESS; 
+				break;
 			/*
 			case 'z':
 				transmit_value[0] = TEST_TRANSMIT_COUNT-1;
@@ -297,7 +328,15 @@ void serial_main_loop_1()
 			tail_ring_buffer = 0;
 		}
 	 }		//received_data_updated = false;	
-	
+	 if(notification == true)
+	 {
+		 if(job_done == SUCCESS)
+		 {
+			 transmit_value[0] = job_done;
+			 usart_write_buffer_wait(&usart_instance, transmit_value, NOTIFICATION_TRANSMIT_LENGTH);
+		 }
+		 job_done = FAILURE;
+	 }
 	 if(broadcast == true)
 	 {
 		if(count_broadcast > MAX_COUNT_BROADCAST)

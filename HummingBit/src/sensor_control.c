@@ -22,7 +22,6 @@ uint32_t read_all_sensors()
 {
 	uint8_t temp_sensor_outputs[4];
 	uint32_t output_multiple_adc = 0;
-	volatile uint32_t temp =0;
 	
 	uint8_t i =0;
 	for(i= 0; i< NO_SENSORS; i++)

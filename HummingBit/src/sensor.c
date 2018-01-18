@@ -34,8 +34,7 @@ void configure_adc()
 uint16_t adc_start_read_result(const enum adc_positive_input analogPin)
 {
 	
-	volatile uint16_t temp = 0;
-	volatile uint32_t temp_2 = 0;
+	uint16_t temp = 0;
 	adc_set_positive_input(&adc_instance, analogPin );
 	adc_start_conversion(&adc_instance);
 	while((adc_get_status(&adc_instance) & ADC_STATUS_RESULT_READY) != 1);

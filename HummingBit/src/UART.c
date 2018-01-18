@@ -33,7 +33,6 @@ void configure_usart(void)
 	while (usart_init(&usart_instance,SERIAL_MODULE, &config_usart) != STATUS_OK)
 	{
 	}
-	
 	usart_enable(&usart_instance);
 	//uint8_t string[] = "Hello World!\r\n";
 	//usart_write_buffer_wait(&usart_instance, string, sizeof(string));
