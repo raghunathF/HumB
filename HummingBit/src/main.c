@@ -44,8 +44,6 @@ volatile uint8_t tail_ring_buffer=0;
 volatile uint8_t head_ring_buffer=0;
 volatile bool received_data_updated=false;
 
-
-
 volatile uint8_t serial_timeout_count = 0;
 volatile bool serial_timeout = false;
 volatile uint8_t count_broadcast = 0;
@@ -68,6 +66,7 @@ int main (void)
 	ORB_init();
 	sensor_init();
 	super_servo_init();
+	
 	serial_init();
 	enable_super_servo();
 	enable_ORB();
@@ -77,7 +76,7 @@ int main (void)
 	/* Insert application code here, after the board has been initialized. */
 	while(1)
 	{
-		//sensor_check();
+		sensor_check();
 		serial_main_loop_1();
 		 //test_ORB();
 		 //load_input();

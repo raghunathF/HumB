@@ -98,7 +98,7 @@ void initializing_LED_compare_array()
 	temp_compare_led_array_2[0] = 255;//LED1
 	temp_compare_led_array_2[1] = 255;//LED2
 	temp_compare_led_array_2[2] = 255;  //LED3
-	temp_compare_led_array_2[3] = 0;  //LED4
+	temp_compare_led_array_2[3] = 255;  //LED4
 
 }
 

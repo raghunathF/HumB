@@ -91,10 +91,10 @@ void serial_main_loop_1()
 			case 'v':
 				serial_timeout_count = 0;
 				serial_timeout = false;
-				transmit_value[0] = read_sensor(SENSOR_NO_1);
-				transmit_value[1] = read_sensor(SENSOR_NO_2);
-				transmit_value[2] = read_sensor(SENSOR_NO_3);
-				transmit_value[3] = read_sensor(SENSOR_NO_4);
+				transmit_value[0] = sensor_outputs[0];
+				transmit_value[1] = sensor_outputs[1];
+				transmit_value[2] = sensor_outputs[2];
+				transmit_value[3] = sensor_outputs[3];
 				
 				usart_write_buffer_wait(&usart_instance, transmit_value, SENSORS_TRANSMIT_LENGTH);
 

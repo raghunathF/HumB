@@ -17,12 +17,13 @@ void configure_adc()
 	adc_get_config_defaults(&conf_adc);
 	adc_result = malloc(sizeof(uint16_t));
 	//conf_adc.clock_source = GCLK_GENERATOR_1;
-	conf_adc.reference			= ADC_REFERENCE_AREFA;
-	conf_adc.clock_prescaler	= ADC_CLOCK_PRESCALER_DIV512;
+	conf_adc.reference			= ADC_REFCTRL_REFSEL_INTVCC0;
+	conf_adc.clock_prescaler	= ADC_CTRLB_PRESCALER_DIV512;
 	conf_adc.positive_input		= 6;
 	conf_adc.negative_input		= ADC_NEGATIVE_INPUT_GND;
 	conf_adc.resolution			= ADC_RESOLUTION_8BIT;
 	conf_adc.left_adjust		= true;
+	//conf_adc.sample_length      = 0;
 	//conf_adc.accumulate_samples = ADC_ACCUMULATE_SAMPLES_16;
 	//conf_adc.divide_result      = ADC_DIVIDE_RESULT_16;
 	//conf_adc.freerunning        = true;
@@ -38,7 +39,7 @@ uint16_t adc_start_read_result(const enum adc_positive_input analogPin)
 	adc_set_positive_input(&adc_instance, analogPin );
 	adc_start_conversion(&adc_instance);
 	while((adc_get_status(&adc_instance) & ADC_STATUS_RESULT_READY) != 1);
-	
+	//delay_cycles_ms(100);
 	adc_read(&adc_instance, adc_result);
 	temp = *adc_result;
 
@@ -54,7 +55,6 @@ void configure_adc_inputs()
 	port_pin_set_config(SENSOR1, &config_port_pin);
 	port_pin_set_config(SENSOR2, &config_port_pin);
 	port_pin_set_config(SENSOR3, &config_port_pin);
-	
 	
 }
 

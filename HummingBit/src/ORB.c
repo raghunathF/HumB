@@ -121,14 +121,20 @@ void ORB_setup_pins()
 
 void tc_callback_OF(struct tc_module *const module_inst)
 {
-	uint8_t compare_value=0;
+	volatile uint8_t compare_value=0;
+	static bool int_enable = true;
 	ORB_leds_off();
 	//Clear interrupts
 	//tc_clear_interrupts(&tc_instance);
 	
 	if(update_compare_array == true)
 	{
-		tc_enable_callback(&orb_tc_instance, TC_CALLBACK_CC_CHANNEL0);
+		//tc_enable_callback(&orb_tc_instance, TC_CALLBACK_CC_CHANNEL0);
+		if(int_enable == true)
+		{
+			int_enable = false;
+			tc_enable_callback(&orb_tc_instance, TC_CALLBACK_CC_CHANNEL0);
+		}
 		transfer_temp();
 		update_compare_array = false;
 	}
@@ -142,6 +148,7 @@ void tc_callback_OF(struct tc_module *const module_inst)
 	}
 	else
 	{
+		int_enable = true;
 		tc_disable_callback(&orb_tc_instance, TC_CALLBACK_CC_CHANNEL0);
 	}
 	//tc_set_inital_value(module_inst, TC_COMPARE_CAPTURE_CHANNEL_0, 0);
